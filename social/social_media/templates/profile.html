@@ -1,0 +1,117 @@
+{% extends 'basic.html' %}
+{% block tittle %}Profile| {{user.username}}{% endblock %}
+{% block body %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'profiles.css' %}">
+<style>
+    .navWidth {
+        width: 260px !important;
+        height: 600px !important;
+        overflow-y: scroll !important;
+    }
+    .profile-image {
+  float: left;
+  width: 200px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 3rem;
+}
+.profile-image img{
+    width: 100%;
+}
+a{
+    text-decoration: none;
+}
+body{
+        background: #2e2c36 !important;
+    }
+</style>
+<div style="margin-left: 300px;">
+    <h1 class="cont" style="color: #f7f7f7;">Profile</h1>
+
+    <header>
+
+        <div class="container">
+
+            <div class="profile">
+
+                <div class="profile-image">
+
+                    <img src="/media/{{profile.profile_pic}}" alt="">
+
+                </div>
+
+                <div class="profile-user-settings">
+
+                    <h1 class="profile-user-name" style="color: #f7f7f7;">{{user}}</h1>
+
+                    <a style="color: #f7f7f7;" class="btn profile-edit-btn" href="{% url 'edit' %}">Edit Profile</a>
+
+                    
+
+                </div>
+
+                <div class="profile-stats">
+
+                    <ul>
+                        <li style="color: #f7f7f7;"><span class="profile-stat-count">{{postnum}}</span> posts</li>
+                        <li style="color: #f7f7f7;"> <a href="{% url 'follower' profile.id %}"><span class="profile-stat-count">{{profile.follower.count}}</span> followers </a></li>
+                        <li style="color: #f7f7f7;"><span class="profile-stat-count">{{profile.following.count}}</span> following</li>
+                    </ul>
+
+                </div>
+
+                <div class="profile-bio">
+
+                    <p style="color: #f7f7f7;"><span class="profile-real-name">{{user}}</span> {{profile.Bio}}</p>
+
+                </div>
+
+            </div>
+            <!-- End of profile section -->
+
+        </div>
+        <!-- End of container -->
+
+    </header>
+
+    <main>
+
+        <div class="container">
+
+            <div class="gallery">
+                {% for i in post %}
+                <div class="gallery-item" tabindex="0">
+
+                    <img src="/media/{{i.posts}}" class="gallery-image" alt="">
+
+                    <div class="gallery-item-info">
+
+                        <ul>
+                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i
+                                    class="fas fa-heart" aria-hidden="true"></i> {{i.likes.count}}</li>
+                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i
+                                    class="fas fa-comment" aria-hidden="true"></i> {{i.comments.count}}</li>
+                        </ul>
+
+                    </div>
+
+                </div>
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+        <!-- End of gallery -->
+
+        <div class="loader"></div>
+
+</div>
+<!-- End of container -->
+
+</main>
+</div>
+
+{% endblock %}

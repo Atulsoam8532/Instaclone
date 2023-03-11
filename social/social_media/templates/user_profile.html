@@ -1,0 +1,153 @@
+{% extends 'basic.html' %}
+{% block tittle %}Profile| {{user.username}}{% endblock %}
+{% block body %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'profiless.css' %}">
+<style>
+    body{
+        background: #2e2c36 !important;
+    }
+    .navWidth {
+        width: 260px !important;
+        height: 600px !important;
+        overflow-y: scroll !important;
+    }
+
+    .profile-image {
+        float: left;
+        width: 200px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 3rem;
+    }
+
+    .profile-image img {
+        width: 100%;
+    }
+    .gallery-item {
+  
+  flex: 1 0 22rem;
+  margin: 1rem;
+  color: #fff;
+  cursor: pointer;
+}
+.visually-hidden {
+  position: relative;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+.gallery-item-type {
+  position: relative;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2.5rem;
+  text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
+}
+.gallery-item:hover .gallery-item-info,
+.gallery-item:focus .gallery-item-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky !important;
+  bottom: 380px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+</style>
+<div style="margin-left: 300px;">
+    <h1 class="cont">Profile</h1>
+
+    <header>
+
+        <div class="container">
+
+            <div class="profile">
+
+                <div class="profile-image">
+
+                    <img src="/media/{{profile.profile_pic}}" alt="">
+
+                </div>
+
+                <div class="profile-user-settings">
+
+                    <h1 class="profile-user-name" style="color: #f7f7f7;">{{u.username}}</h1>
+
+
+                    
+
+                </div>
+
+                <div class="profile-stats">
+
+                    <ul>
+                        <li style="color: #f7f7f7;"><span class="profile-stat-count" style="color: #f7f7f7;" >{{postnum}}</span> posts</li>
+                        <li style="color: #f7f7f7;"> <a href="{% url 'follower' profile.id %} "style="color: #f7f7f7;"><span
+                                    class="profile-stat-count" style="color: #f7f7f7;">{{profile.follower.count}}</span> followers </a></li>
+                        <li style="color: #f7f7f7;"><span class="profile-stat-count" style="color: #f7f7f7;">{{profile.following.count}}</span style="color: #f7f7f7;"> following</li>
+                    </ul>
+
+                </div>
+
+
+                <div class="profile-bio">
+
+                    <p style="color: #f7f7f7;"><span class="profile-real-name" style="color: #f7f7f7;">{{u}}</span style="color: #f7f7f7;">  {{profile.Bio}}</p>
+
+                </div>
+                {% if user in i.follower.all %}
+                <a class="badge" href="/follow/{{profile.id}}/{{username}}">UnFollow</a>
+                {% else %}
+                <a class="badge" href="/follow/{{profile.id}}/{{username}}">Follow</a>
+                {% endif %}
+            </div>
+            <!-- End of profile section -->
+
+        </div>
+        <!-- End of container -->
+
+    </header>
+
+    <main>
+
+        <div class="container">
+
+            <div class="gallery">
+                {% for i in post %}
+                <div class="gallery-item" tabindex="0">
+
+                    <img src="/media/{{i.posts}}" class="gallery-image" alt="">
+
+                    <div class="gallery-item-info">
+
+                        <ul>
+                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i
+                                    class="fas fa-heart" aria-hidden="true"></i> {{i.likes.count}}</li>
+                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i
+                                    class="fas fa-comment" aria-hidden="true"></i> {{i.comments.count}}</li>
+                        </ul>
+
+                    </div>
+
+                </div>
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+        <!-- End of gallery -->
+
+        <div class="loader"></div>
+
+</div>
+<!-- End of container -->
+
+</main>
+</div>
+
+{% endblock %}

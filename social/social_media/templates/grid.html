@@ -1,0 +1,243 @@
+
+
+
+
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'navs.css' %}">
+
+</head>
+<style>
+    img {
+        width: 40px;
+    }
+
+    .search {
+        font-size: 15px;
+
+    }
+
+    .search input {
+        width: 100px;
+    }
+
+    .search img {
+        width: 30px;
+    }
+
+    .active {
+        background-color: rgb(61, 61, 161);
+        border-radius: 20px;
+        color: white;
+        filter: brightness(204%) contrast(100%);
+    }
+    .active:hover{
+        background-color: rgb(61, 61, 161);
+        border-radius: 20px;
+        color: white;
+        filter: brightness(204%) contrast(100%);
+    }
+    .navOpt:hover {
+        background-color: rgba(61, 61, 161, 0.324) !important;
+        color: black !important;
+        border-radius: 20px !important;
+        filter:  brightness(204%) contrast(100%) !important;
+    
+    }
+</style>
+
+
+<nav id="sideNav1" class="navWidth">
+
+    <div class="navOpt search">
+        <form action="{% url 'search' %}" method="get">
+            <img src="https://assets.codepen.io/1240556/search.svg" /><input type="text" id="search" name="search"
+                placeholder="Search...">
+            <input type="submit" name="" id="" hidden>
+        </form>
+    </div>
+    <div id="title" class="navOpt">Navigation</div>
+    {% url 'home' as url %}
+    <a href="{% url 'home' %}" class="navOpt {% if request.path == url %}active{% endif %}">
+        <img src="https://assets.codepen.io/1240556/dash.svg" /><span>Dashboard</span>
+    </a>
+    {% url 'showchats' as url %} 
+    <a class="navOpt {% if request.path == url %}active{% endif %}" href="{% url 'showchats' %}">
+        <img src="https://assets.codepen.io/1240556/chat_1.svg" /><span>Messenger</span>
+    </a>
+    {% url 'reel' as url %}
+    <a href="{% url 'reel' %}" class="navOpt {% if request.path == url %}active{% endif %}">
+        <img src="https://assets.codepen.io/1240556/chart_1.svg" /><span>Reels</span>
+    </a>
+   
+    <a href="" class="navOpt {% if request.path == url %}active{% endif %}">
+        <img src="https://assets.codepen.io/1240556/sched.svg" /><span>Schedule</span>
+    </a>
+    
+    <a href="" class="navOpt">
+        <img src="https://assets.codepen.io/1240556/cal_1.svg" /><span>Calendar</span>
+    </a>
+    {% url 'profile' as url %}
+    <a href="{% url 'profile' %}" class="navOpt {% if request.path == url %}active{% endif %}">
+        <img src="https://assets.codepen.io/1240556/user_1.svg" /><span>Profile</span>
+    </a>
+    {% url 'upload' as url %}
+    <a href="{% url 'upload' %}" class="navOpt {% if request.path == url %}active{% endif %}">
+        <img src="https://assets.codepen.io/1240556/files_1.svg" /><span>Upload </span>
+    </a>
+    {% url 'home' as url %}
+    <a href="" class="navOpt">
+        <img src="https://assets.codepen.io/1240556/settings.svg" /><span>Settings</span>
+    </a>
+    <a href="" class="user">
+        <img src="https://assets.codepen.io/1240556/thumb.png" />
+        <div>Hello<br><br>{user.username}</div>
+        <span><img src="https://assets.codepen.io/1240556/chev_1.svg" /></span>
+    </a>
+    {% if user.is_authenticated %}
+    <a href="{% url 'logout' %}" class="navOpt">
+        <span>Logout</span>
+    </a>
+    {% else %}
+    <a href="{% url 'login' %}" class="navOpt">
+        <span>Login</span>
+    </a>
+    <a href="{% url 'signup' %}" class="navOpt">
+        <span>Register</span>
+    </a>
+    {% endif %}
+</nav>
+</div>
+{% block body %}{% endblock %}
+
+<body>
+
+</body>
+<style>
+  #frame #sidepanel {
+float: right;
+min-width: 280px;
+max-width: 340px;
+width: 30%;
+height: 100%;
+background: #2c3e50;
+color: #f5f5f5;
+overflow: hidden;
+position: relative;
+}
+#frame .content {
+float: right;
+width: 60%;
+height: 100%;
+overflow: hidden;
+position: relative;
+}
+.meta a{
+text-decoration: none;
+color: white;
+}
+</style>
+<link rel="stylesheet" href="{% static 'showchat.css' %}">
+<div id="frame" style="margin-left: 300px; width: 78%;">
+<div id="sidepanel">
+<div id="profile">
+<div class="wrap">
+  <img id="profile-img" src="/media/{{profile.profile_pic}}" class="online" alt="" />
+  <p>{{profile.user}}</p>
+  <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+  <div id="status-options">
+    <ul>
+      <li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
+      <li id="status-away"><span class="status-circle"></span> <p>Away</p></li>
+      <li id="status-busy"><span class="status-circle"></span> <p>Busy</p></li>
+      <li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>
+    </ul>
+  </div>
+  <div id="expanded">
+    <label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
+    <input name="twitter" type="text" value="mikeross" />
+    <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
+    <input name="twitter" type="text" value="ross81" />
+    <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
+    <input name="twitter" type="text" value="mike.ross" />
+  </div>
+</div>
+</div>
+<div id="search">
+<label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+<input type="text" placeholder="Search contacts..." />
+</div>
+<div id="contacts">
+<ul>
+          {% for i in chats %}
+  <li class="contact">
+    <div class="wrap">
+      <span class="contact-status online"></span>
+      <img src="/media/{{i.profile_pic}}" alt="" />
+      <div class="meta">
+                      <a href="{% url 'room' i.id %}" >
+        <p class="name">{{i.username}}</p>
+        <p class="preview">{{i.username}}</p></a>
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+</div>
+<div id="bottom-bar">
+<button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
+<button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
+</div>
+</div>
+<div class="content">
+<div class="contact-profile">
+<img src="/media/{{head.profile_pic}}" alt="" />
+<p>{{he.user_2}}</p>
+<div class="social-media">
+  <i class="fa fa-facebook" aria-hidden="true"></i>
+  <i class="fa fa-twitter" aria-hidden="true"></i>
+   <i class="fa fa-instagram" aria-hidden="true"></i>
+</div>
+</div>
+<div class="messages">
+<ul>
+          {% for i in room %}
+  <li class="sent">
+    <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+              {% if i.user != request.user %}
+    <p>{{i.msg}}</p>
+              {% endif %}
+  </li>
+  <li class="replies">
+    <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+              {% if i.user == request.user %}
+    <p> {{i.msg}}</p>
+              {% endif %}
+  </li>
+  {% endfor %}
+  
+</ul>
+</div>
+<div class="message-input">
+<div class="wrap">
+          <form action="" method="post">
+              
+<input type="text" name="msg" placeholder="Write your message..." />
+<i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+  </form>
+</div>
+</div>
+</div>
+</div>
+
+</html>

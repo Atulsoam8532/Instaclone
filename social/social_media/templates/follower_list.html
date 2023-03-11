@@ -1,0 +1,26 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block body %}
+<link rel="stylesheet" href="{% static 'search.css' %}">
+
+{% for i in list.follower.all %}
+<div class="search-result new-job" style="margin-left: 300px;">
+    {% if user in list.follower.all %}
+    <a class="badge" href="/follow/{{i.id}}/{{username}}">UnFollow</a>
+    {% else %}
+    <a class="badge" href="/follow/{{i.id}}/{{username}}">Follow</a>
+    
+    {% endif %}
+    <div class="icon">
+        <img src="/media/{{i.profile_pic}}" width="60" />
+    </div>
+    <div class="content">
+        <h2><a href="{% url 'showprofile' i.id %}"> {{i.username}}</a></h2>
+        <p>
+            <span class="company"><a href=""> </a></span>
+        </p>
+    </div>
+   
+</div>
+{% endfor %}
+{% endblock %}
