@@ -94,11 +94,14 @@
         color: black !important;
         padding: 7px;
     }
+    .btn-save{
+        float: right;
+        
+    }
 </style>
 {% for i in post %}
+
 <div style="margin-left: 300px;">
-
-
     <div class="feed">
         <section class="username">
             <div class="image">
@@ -120,7 +123,19 @@
             <a href="{% url 'like' i.id %}" class="btn-love"><i class="fa fa-thumbs-o-up" style="font-size:24px"></i></i></a>
             {% endif %}
             <a  class="btn-comment" ><i class="fa fa-comments-o" style="font-size:24px"></i></a>
-            <a class="btn-share"><i class="fa fa-share-alt" style="font-size:24px"></i></i></a>
+            <a class="btn-share"><i class="fa fa-share-alt" style="font-size:24px"></i></a>
+            
+            {% if user in i.saved_user.all %}
+            <a href="{% url 'save' i.id %}" class="btn-save"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-check-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+              </svg></a>
+            {% else %}
+            <a href="{% url 'save' i.id %}" class="btn-save">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                  </svg></a>
+            {% endif %}
+            
 
         </section>
         <section class="caption">

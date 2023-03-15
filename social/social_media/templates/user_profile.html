@@ -4,9 +4,10 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'profiless.css' %}">
 <style>
-    body{
+    body {
         background: #2e2c36 !important;
     }
+
     .navWidth {
         width: 260px !important;
         height: 600px !important;
@@ -25,38 +26,46 @@
     .profile-image img {
         width: 100%;
     }
+
     .gallery-item {
-  
-  flex: 1 0 22rem;
-  margin: 1rem;
-  color: #fff;
-  cursor: pointer;
-}
-.visually-hidden {
-  position: relative;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  clip: rect(1px, 1px, 1px, 1px);
-}
-.gallery-item-type {
-  position: relative;
-  top: 1rem;
-  right: 1rem;
-  font-size: 2.5rem;
-  text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
-}
-.gallery-item:hover .gallery-item-info,
-.gallery-item:focus .gallery-item-info {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: sticky !important;
-  bottom: 380px;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-}
+
+        flex: 1 0 22rem;
+        margin: 1rem;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .visually-hidden {
+        position: relative;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+        clip: rect(1px, 1px, 1px, 1px);
+    }
+
+    .gallery-item-type {
+        position: relative;
+        top: 1rem;
+        right: 1rem;
+        font-size: 2.5rem;
+        text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
+    }
+
+    .gallery-item:hover .gallery-item-info,
+    .gallery-item:focus .gallery-item-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: sticky !important;
+        bottom: 380px;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    a {
+        text-decoration: none;
+    }
 </style>
 <div style="margin-left: 300px;">
     <h1 class="cont">Profile</h1>
@@ -75,20 +84,25 @@
 
                 <div class="profile-user-settings">
 
-                    <h1 class="profile-user-name" style="color: #f7f7f7;">{{u.username}}</h1>
+                    <h1 class="profile-user-name" style="color: #f7f7f7;">{{profile.user}}</h1>
 
 
-                    
+
 
                 </div>
 
                 <div class="profile-stats">
 
                     <ul>
-                        <li style="color: #f7f7f7;"><span class="profile-stat-count" style="color: #f7f7f7;" >{{postnum}}</span> posts</li>
-                        <li style="color: #f7f7f7;"> <a href="{% url 'follower' profile.id %} "style="color: #f7f7f7;"><span
-                                    class="profile-stat-count" style="color: #f7f7f7;">{{profile.follower.count}}</span> followers </a></li>
-                        <li style="color: #f7f7f7;"><span class="profile-stat-count" style="color: #f7f7f7;">{{profile.following.count}}</span style="color: #f7f7f7;"> following</li>
+                        <li style="color: #f7f7f7;"><span class="profile-stat-count"
+                                style="color: #f7f7f7;">{{postnum}}</span> posts</li>
+                        <li style="color: #f7f7f7;"> <a href="{% url 'follower' profile.id %} "
+                                style="color: #f7f7f7;"><span class="profile-stat-count"
+                                    style="color: #f7f7f7;">{{profile.follower.count}}</span> followers </a></li>
+                        <li style="color: #f7f7f7;"><a href="{% url 'following' profile.id %} "
+                                style="color: #f7f7f7;"><span class="profile-stat-count"
+                                style="color: #f7f7f7;">{{profile.following.count}}</span style="color: #f7f7f7;">
+                            following </a></li>
                     </ul>
 
                 </div>
@@ -96,14 +110,18 @@
 
                 <div class="profile-bio">
 
-                    <p style="color: #f7f7f7;"><span class="profile-real-name" style="color: #f7f7f7;">{{u}}</span style="color: #f7f7f7;">  {{profile.Bio}}</p>
+                    <p style="color: #f7f7f7;"><span class="profile-real-name"
+                            style="color: #f7f7f7;">{{profile.user}}</span style="color: #f7f7f7;"> {{profile.Bio}}</p>
 
                 </div>
-                {% if user in i.follower.all %}
-                <a class="badge" href="/follow/{{profile.id}}/{{username}}">UnFollow</a>
+
+                {% if u in profi.follower.all %}
+                <a class="badge unfollow" href="/follow_profile/{{profile.id}}/{{profile.user}}">UnFollow</a>
                 {% else %}
-                <a class="badge" href="/follow/{{profile.id}}/{{username}}">Follow</a>
+                <a class="badge follow" href="/follow_profile/{{profile.id}}/{{profile.user}}">Follow</a>
                 {% endif %}
+
+
             </div>
             <!-- End of profile section -->
 

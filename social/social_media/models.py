@@ -23,6 +23,7 @@ class Post(models.Model):
     profiles = models.ForeignKey(Profile,on_delete=models.CASCADE)
     date = models.DateField(default=date.today(),blank=True)
     time = models.TimeField(default=time.strftime("%I:%M:%S"),blank=True)
+    saved_user = models.ManyToManyField(User,related_name='saved_user',blank=True)
     def __str__(self):
         return self.user
 
@@ -54,6 +55,8 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment
+    
+
 
 
     

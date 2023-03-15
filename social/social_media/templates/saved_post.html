@@ -1,0 +1,169 @@
+{% extends 'basic.html' %}
+{% block title %} Home| {{user}} {% endblock %}
+{% block body %}
+{% load static %}
+<style>
+    body {
+
+        font-family: "Roboto", sans-serif;
+    }
+
+    .feed {
+        width: 30%;
+        height:auto;
+        margin: 0px;
+        background-color: #FFFFFF;
+        /* margin: 80px 10px; */
+        padding-bottom: 10px;
+        border-radius: 20px;
+    }
+
+    .feed .username {
+        padding: 10px 30px 0px 30px;
+        display: flex;
+        flex-flow: row;
+    }
+
+    .feed .username .image,
+    .feed .username .image img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+    }
+
+    .feed .username a {
+        color: #000000 !important;
+        font-weight: 400;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .feed .username .id {
+        margin: 10px 15px;
+    }
+
+    .feed .post {
+        width: 100%;
+        height: 300px;
+        margin: 10px 0px;
+    }
+
+    .feed .post img {
+        width: 100%;
+        height: inherit;
+    }
+
+    .feed .btn-group {
+        padding: 0px 10px;
+
+    }
+
+    .feed .btn-group a {
+
+        border: none;
+        cursor: pointer;
+    }
+
+    .feed .btn-group .btn-bookmark {
+        float: right;
+    }
+
+    .feed .caption {
+        font-size: 13px;
+        padding: 0px 20px;
+    }
+
+    .feed .caption .like {
+        font-weight: bold;
+    }
+
+    .feed .caption .id {
+        color: #000000;
+        text-decoration: none;
+    }
+
+    .feed .caption .time {
+        font-size: 10px;
+        color: #999;
+    }
+
+    a {
+        text-decoration: none;
+        color: black !important;
+        padding: 7px;
+    }
+
+    .btn-save {
+        float: right;
+
+    }
+    .inline{
+        display: inline-block;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+<body>
+    
+    <div class="inline">
+        {% for i in post %}
+        {% if user in i.saved_user.all %}
+        <div class="feed">
+
+            <section class="username">
+                <div class="image">
+                    <a href=""><img src="/media/{{i.profile_pic}}"></a>
+                </div>
+                <div class="id">
+                    <a href="/showprofile/{{i.user_id}}/{{i.user}}">{{i.user}}</a>
+                </div>
+            </section>
+            <section class="post">
+                <img src="/media/{{i.posts}}">
+            </section>
+            <section class="btn-group">
+                {% if user in i.likes.all %}
+                <a href="{% url 'like' i.id %}" class="btn-love"><i class="fa fa-thumbs-up"
+                        style="font-size:24px"></i></a>
+                {% else %}
+                <a href="{% url 'like' i.id %}" class="btn-love"><i class="fa fa-thumbs-o-up"
+                        style="font-size:24px"></i></i></a>
+                {% endif %}
+                <a class="btn-comment"><i class="fa fa-comments-o" style="font-size:24px"></i></a>
+                <a class="btn-share"><i class="fa fa-share-alt" style="font-size:24px"></i></a>
+
+                {% if user in i.saved_user.all %}
+                <a href="{% url 'save' i.id %}" class="btn-save"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" fill="currentColor" class="bi bi-bookmark-check-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+                    </svg></a>
+                {% else %}
+                <a href="{% url 'save' i.id %}" class="btn-save">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-bookmark" viewBox="0 0 16 16">
+                        <path
+                            d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+                    </svg></a>
+                {% endif %}
+
+
+            </section>
+            <section class="caption">
+                <p class="like">{{i.likes.count}} likes</p>
+                <p><b><a class="id" href="https://www.instagram.com/kentury_">{{i.user}}</a></b>
+                    {{i.bio}} </p>
+
+                <p class="time">{{time}} </p>
+
+            </section>
+
+        </div>
+        {% endif %}
+        {% endfor %}
+
+    </div>
+   
+</body>
+{% endblock %}

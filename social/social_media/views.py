@@ -12,7 +12,7 @@ def home(request):
     comment = Comment.objects.filter(user=request.user)
     profile = Profile.objects.get(user = request.user)
     
-    return render(request, 'home.html',{'post':posts,'profi':profile,})
+    return render(request, 'home.html',{'post':posts,'profi':profile})
 
 def logins(request):
     if request.method == 'POST':
@@ -74,6 +74,18 @@ def follow(request,id,username):
         following.following.add(profil.user)
     return redirect(f'/search?search={username}')
 
+def follow_profile(request,id,username):
+    profil = Profile.objects.get(id = id)
+    
+    following = Profile.objects.get(user= request.user)
+    if request.user in profil.follower.all():
+        profil.follower.remove(request.user)
+        following.following.remove(profil.user)
+    else:
+        profil.follower.add(request.user)
+        following.following.add(profil.user)
+    return redirect(f'/showprofile/{id}/{username}')
+
 def upload_post(request):
     if request.method == 'POST':
         img = request.FILES.get('image')
@@ -117,13 +129,31 @@ def clicked_profile(request,id,user):
     postnum = post_count.count()
     profi = Profile.objects.get(user= request.user)
     return render(request,'user_profile.html',{'profi':profi,'postnum':postnum,'u':users,'profile':clicked,'post':post_count})
+def follow_custom(request,id,user,username):
+    profil = Profile.objects.get(id = user)
+    print(profil.user)
+    following = Profile.objects.get(user= request.user)
+    if request.user in profil.follower.all():
+        profil.follower.remove(request.user)
+        following.following.remove(profil.user)
+    else:
+        profil.follower.add(request.user)
+        following.following.add(profil.user)
+    return redirect(f'/showprofile/{id}/{username}')
+
 def follow_list(request,user):
-    curent = Profile.objects.get(id =user)
-    list = curent.follower.all()
-    print(list)
-    return render(request,'follower_list.html',{'list':curent})
-def following(request):
-    return render(request,'following_list.html')
+    users = Profile.objects.get(id=user)
+    curent = Profile.objects.filter(following = users.user)
+    post_count = Post.objects.filter(user_id =user)
+    postnum = post_count.count()
+    return render(request,'follower_list.html',{'profil':curent,'postnum':postnum,'profile':users})
+def following(request,user):
+    users = Profile.objects.get(id=user)
+    curent = Profile.objects.filter(follower = users.user)
+    post_count = Post.objects.filter(user_id =user)
+    postnum = post_count.count()
+    return render(request,'following_list.html',{'profil':curent,'postnum':postnum,'profile':users})
+   
 
 def like(request,id):
     liked = Post.objects.get(id=id)
@@ -184,6 +214,25 @@ def add_comment(request,id):
 
 def grid(request):
     return render(request,'grid.html')
+
+
+def save_post(request,id):
+    post = Post.objects.get(id = id)
+    if request.user in post.saved_user.all():
+        post.saved_user.remove(request.user)
+        
+        post.save()
+    else:
+        post.saved_user.add(request.user)
+        post.save()
+
+    return redirect('home')
+
+def show_save_post(request):
+    post = Post.objects.all()
+    return render(request,'saved_post.html',{'post':post})
+
+
 
 
 

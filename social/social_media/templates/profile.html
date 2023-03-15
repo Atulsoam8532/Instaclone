@@ -2,7 +2,7 @@
 {% block tittle %}Profile| {{user.username}}{% endblock %}
 {% block body %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'profiles.css' %}">
+<link rel="stylesheet" href="{% static 'profiless.css' %}">
 <style>
     .navWidth {
         width: 260px !important;
@@ -55,9 +55,15 @@ body{
                 <div class="profile-stats">
 
                     <ul>
-                        <li style="color: #f7f7f7;"><span class="profile-stat-count">{{postnum}}</span> posts</li>
-                        <li style="color: #f7f7f7;"> <a href="{% url 'follower' profile.id %}"><span class="profile-stat-count">{{profile.follower.count}}</span> followers </a></li>
-                        <li style="color: #f7f7f7;"><span class="profile-stat-count">{{profile.following.count}}</span> following</li>
+                        <li style="color: #f7f7f7;"><span class="profile-stat-count"
+                                style="color: #f7f7f7;">{{postnum}}</span> posts</li>
+                        <li style="color: #f7f7f7;"> <a href="{% url 'follower' profile.id %} "
+                                style="color: #f7f7f7;"><span class="profile-stat-count"
+                                    style="color: #f7f7f7;">{{profile.follower.count}}</span> followers </a></li>
+                        <li style="color: #f7f7f7;"><a href="{% url 'following' profile.id %} "
+                                style="color: #f7f7f7;"><span class="profile-stat-count"
+                                style="color: #f7f7f7;">{{profile.following.count}}</span style="color: #f7f7f7;">
+                            following </a></li>
                     </ul>
 
                 </div>
